@@ -163,4 +163,16 @@ class QuerydslBasicTest {
         assertThat(member6.getUsername()).isEqualTo("member6");
         assertThat(memberNull.getUsername()).isNull();
     }
+
+    @Test
+    public void pageing1() {
+        List<Member> result = queryFactory
+                .selectFrom(member)
+                .orderBy(member.username.desc())
+                .offset(3) // 3번째 row부터(0번째부터 시작)
+                .limit(2) // 2개 가져오기
+                .fetch();
+
+        assertThat(result.size()).isEqualTo(1);
+    }
 }
